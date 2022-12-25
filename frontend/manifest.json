@@ -1,0 +1,25 @@
+{
+  
+  "name": "DetecPhis",
+  "version": "1.0.0",
+  "description": "A phishing detector plugin",
+  "permissions": ["activeTab","declarativeContent", "storage", "webNavigation"],
+  
+  "action": {
+    "default_title": "DetecPhis",
+    "default_popup": "plugin_ui.html"
+  },
+  "content_scripts":[
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/jquery.js","js/features.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  
+  },
+  "manifest_version": 3  
+}

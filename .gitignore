@@ -1,0 +1,9 @@
+**/*.npy
+**/.ipynb_checkpoints
+**/__pycache__/
+**/*.pem
+**/*.crx
+
+.env
+.env/
+
