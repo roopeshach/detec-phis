@@ -13,6 +13,14 @@ DetecPhis is a chrome extension that uses a random forest algorithm to detect ph
 3. Run the following command to install the dependencies
 
 ```bash
+python -m venv .env
+
+#for windows 
+.env\Scripts\activate
+
+#for linux
+source .env/bin/activate
+
 pip install -r requirements.txt
 ```
 

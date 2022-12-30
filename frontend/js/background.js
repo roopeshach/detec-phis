@@ -8,8 +8,7 @@ function fetchLive(callback) {
   $.getJSON("http://127.0.0.1/classifier.json", function(data) {
       chrome.storage.local.set({cache: data, cacheTime: Date.now()}, function() {
         console.log("Classifier updated", data);  
-        callback(data);
-          
+        callback(data);  
       });
   });
 }

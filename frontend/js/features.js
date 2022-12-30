@@ -192,11 +192,11 @@ totalCount=phishCount+legitCount;
 outRequest=(phishCount/totalCount)*100;
 
 if(outRequest<31){
-    result["Anchor"]="-1";
+    result["URL of Anchor"]="-1";
 }else if(outRequest>=31&&outRequest<=67){
-    result["Anchor"]="0";
+    result["URL of Anchor"]="0";
 }else{
-    result["Anchor"]="1";
+    result["URL of Anchor"]="1";
 }
 
 //alert(allhrefs);
@@ -284,15 +284,82 @@ for(var i = 0; i < forms.length; i++) {
 }
 result["mailto"] = res;
 
+//---------------------- 18.Avoiding IP Address ----------------------
 
-//---------------------- 18. Abnormal URL  ----------------------
+var forms = document.getElementsByTagName("form");
+var res = "-1";
 
-var url = document.URL;
-var patt = /https:\/\/www\.google\.com\/search\?q=.*&oq=.*&aqs=chrome..69i57j69i60l3j69i61.1094j0j7&sourceid=chrome&ie=UTF-8/;
-if(patt.test(url)) {
-    result["Abnormal URL"] = "1";
+for(var i = 0; i < forms.length; i++) {
+    var action = forms[i].getAttribute("action");
+    if(!action) continue;
+    if(action.startsWith("http://") && action.indexOf(".") == -1) {
+        res = "1";
+        break;
+    }
+}
+result["Avoiding IP"] = res;
+
+//---------------------- 19. on mouse over ----------------------
+
+var res = "-1";
+
+var all = document.getElementsByTagName("*");
+for(var i = 0; i < all.length; i++) {
+    if(all[i].getAttribute("onmouseover")) {
+        res = "1";
+        break;
+    }
+}
+result["onmouseover"] = res;
+
+//---------------------- 20. Right Click ----------------------
+
+var res = "-1";
+
+var all = document.getElementsByTagName("*");
+for(var i = 0; i < all.length; i++) {
+    if(all[i].getAttribute("oncontextmenu")) {
+        res = "1";
+        break;
+    }
 }
 
+result["Right Click"] = res;
+
+//---------------------- 21. PopUp Window ----------------------
+
+var res = "-1";
+
+var all = document.getElementsByTagName("*");
+for(var i = 0; i < all.length; i++) {
+    if(all[i].getAttribute("onload")) {
+        var onload = all[i].getAttribute("onload");
+        if(onload.indexOf("window.open") != -1) {
+            res = "1";
+            break;
+        }
+    }
+}
+
+result["PopUp Window"] = res;
+
+
+//---------------------- 22. Using Anchor ----------------------
+
+var res = "-1";
+
+var all = document.getElementsByTagName("*");
+for(var i = 0; i < all.length; i++) {
+    if(all[i].getAttribute("href")) {
+        var href = all[i].getAttribute("href");
+        if(href.indexOf("javascript:") != -1) {
+            res = "1";
+            break;
+        }
+    }
+}
+
+result["Using Anchor"] = res;
 
 
 //---------------------- 23.Using iFrame ----------------------
@@ -304,6 +371,42 @@ if(iframes.length == 0) {
 } else {
     result["iFrames"] = "1";
 }
+
+//---------------------- 24. Use of multiple external site redirection----------------------   
+
+var res = "-1";
+
+var all = document.getElementsByTagName("*");
+for(var i = 0; i < all.length; i++) {
+    if(all[i].getAttribute("href")) {
+        var href = all[i].getAttribute("href");
+        if(href.indexOf("http://") != -1) {
+            res = "1";
+            break;
+        }
+    }
+}
+
+result["Multiple External"] = res;
+
+//---------------------- 25. Using JavaScript ----------------------
+
+var res = "-1";
+
+var all = document.getElementsByTagName("*");
+for(var i = 0; i < all.length; i++) {
+    if(all[i].getAttribute("href")) {
+        var href = all[i].getAttribute("href");
+        if(href.indexOf("javascript:") != -1) {
+            res = "1";
+            break;
+        }
+    }
+}
+
+result["Using JavaScript"] = res;
+
+
 
 
 
